@@ -39,3 +39,4 @@ All the parameters/knobs are same as 2-class classification except `ANIMATE`.
 2. [Adding a column to matrix of numpy](https://stackoverflow.com/questions/8486294/how-to-add-an-extra-column-to-a-numpy-array)
 3. [For Activation Function, if value > 0 then 1 else 0](https://stackoverflow.com/questions/45648668/convert-numpy-array-to-0-or-1)
 4. [Plotting line, and scatter points](https://stackoverflow.com/questions/12487060/matplotlib-color-according-to-class-labels)
+5. [Dynamic Plot updates](https://stackoverflow.com/questions/4098131/how-to-update-a-plot-in-matplotlib/4098938#4098938)
