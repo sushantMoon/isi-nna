@@ -7,6 +7,7 @@ import matplotlib
 
 DIMENSION_OF_X = 2
 TOTAL_SAMPLES = 1000
+ANIMATE = False
 
 itr = data_generator(
     total_classes=2,
@@ -30,7 +31,7 @@ node = perceptron(
     epochs=100,
     learning_rate=0.05
 )
-node.train(X, Y)
+node.train(X, Y, animate=ANIMATE)
 
 X_test = []
 Y_test = []
@@ -44,14 +45,13 @@ Y_test = np.array(Y_test)
 
 Y_test_hat = node.predict(X_test)
 
-print("Test Loss : {}".format(np.sum(Y_test - Y_test_hat)))
+print("Test Loss : {}".format(np.sum(np.absolute(Y_test - Y_test_hat))))
 
 if DIMENSION_OF_X == 2:
     decision_boundary_x = [
         min(np.min(X[:, 0]-2), np.min(X_test[:, 0]-2)),
         max(np.max(X[:, 0]+2), np.max(X_test[:, 0]+2))
     ]
-    intercept = node.weights[2]
     decision_boundary_y = np.dot(
         (-1/node.weights[1]),
         (
@@ -68,7 +68,7 @@ if DIMENSION_OF_X == 2:
     plt.scatter(
         X_test[:, 0],
         X_test[:, 1],
-        color=['orange' if y == 0 else 'skyblue' for y in Y]
+        color=['orange' if y == 0 else 'skyblue' for y in Y_test]
     )
     plt.plot(
         decision_boundary_x,

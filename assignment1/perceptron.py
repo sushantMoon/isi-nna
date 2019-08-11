@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class perceptron:
@@ -54,7 +55,7 @@ class perceptron:
         Y_hat = np.where(dot_product > 0, 1, 0)
         return np.reshape(Y_hat, (X.shape[0], 1))
 
-    def train(self, X, Y):
+    def train(self, X, Y, animate=False):
         """Perceptron Training Function
 
         Arguments:
@@ -66,7 +67,11 @@ class perceptron:
             Y {numpy.array(numpy.array())} -- Ground Truth values for
             each of the samples, stating the class they belong to.
             Shape: m (number of samples) x 1
+
+            animate {bool} [default : false] it will show you the line as
+            the model learns(valid of only 2 dimensional data)
         """
+        plt.ion()
         for epoch in range(self.epochs):
             input_X = X
             Y_hat = self.predict(input_X)
@@ -78,6 +83,33 @@ class perceptron:
                 self.learning_rate * (Y - Y_hat) * with_bais_X,
                 axis=0
             )
+            if animate and (input_X.shape[1] == 2):
+                decision_boundary_x = [
+                    np.min(X[:, 0]-2),
+                    np.max(X[:, 0]+2)
+                ]
+                decision_boundary_y = np.dot(
+                    (-1/self.weights[1]),
+                    (
+                        np.dot(
+                            self.weights[0], decision_boundary_x
+                        ) + self.weights[2]
+                    )
+                )
+                plt.scatter(
+                    X[:, 0],
+                    X[:, 1],
+                    color=['red' if y == 0 else 'darkblue' for y in Y]
+                )
+                plt.plot(
+                    decision_boundary_x,
+                    decision_boundary_y,
+                    label='Decision Boundary'
+                )
+                plt.draw()
+                plt.pause(0.001)
+                plt.clf()
+
 """
 ### For Testing
 import numpy as np
