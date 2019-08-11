@@ -15,12 +15,12 @@ Look into the code for detailed comments.
 
 The parameters that can be tweaked are ,
 
-`DIMENSION_OF_X` : Total number of features/independent varaibles for any given sample.
-`TOTAL_SAMPLES` : Total number of sample.
-`list_of_means` : mean of data for each of the classes, used by the data generator.
-`list_of_std` : standard deviations of the data for each of the classes, used by the data generator.
-`epochs` : training epochs.
-`learning_rate` : learning rate for the perceptron.
+1. `DIMENSION_OF_X` : Total number of features/independent varaibles for any given sample.
+2. `TOTAL_SAMPLES` : Total number of sample.
+3. `list_of_means` : mean of data for each of the classes, used by the data generator.
+4. `list_of_std` : standard deviations of the data for each of the classes, used by the data generator.
+5. `epochs` : training epochs.
+6. `learning_rate` : learning rate for the perceptron.
 
 Additional : If number of `dimensions == 2` then graph would be plotted.
 
