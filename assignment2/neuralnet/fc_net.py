@@ -10,7 +10,7 @@ class FullyConnectedNet(object):
     dropout and batch normalization as options. For a network with L layers,
     the architecture will be
 
-    {affine - [batch norm] - relu - [dropout]} x (L - 1) - affine - softmax
+    {affine - relu} x (L - 1) - affine - softmax
 
     where batch normalization and dropout are optional, and the {...} block is
     repeated L - 1 times.
@@ -52,15 +52,6 @@ class FullyConnectedNet(object):
         # initialized from a normal distribution with standard deviation equal
         # to  #
         # weight_scale and biases should be initialized to zero.
-        #
-        #
-        # When using batch normalization, store scale and shift parameters for
-        # the #
-        # first layer in gamma1 and beta1; for the second layer use gamma2
-        # and     #
-        # beta2, etc. Scale parameters should be initialized to one and
-        # shift      #
-        # parameters should be initialized to zero.
         #
         #######################################################################
         if type(hidden_dims) != list:
