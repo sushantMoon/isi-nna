@@ -1,5 +1,12 @@
 import time
 import numpy as np
+import os
+import matplotlib as mpl
+
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
+
 import matplotlib.pyplot as plt
 from neuralnet.fc_net import FullyConnectedNet
 from neuralnet.data_utils import get_CIFAR10_data
