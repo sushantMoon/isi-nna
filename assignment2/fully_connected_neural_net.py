@@ -1,20 +1,22 @@
 import time
 import numpy as np
 import os
-import matplotlib as mpl
-
-if os.environ.get('DISPLAY','') == '':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
-
-import matplotlib.pyplot as plt
 from neuralnet.fc_net import FullyConnectedNet
 from neuralnet.data_utils import get_CIFAR10_data
 from neuralnet.gradient_check import eval_numerical_gradient
 from neuralnet.gradient_check import eval_numerical_gradient_array
 from neuralnet.solver import Solver
+from neuralnet.save_load import SaveLoad
+import matplotlib as mpl
 
-plt.rcParams['figure.figsize'] = (10.0, 8.0)    # set default size of plots
+if os.environ.get('DISPLAY', '') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
+
+import matplotlib.pyplot as plt
+
+plt.rcParams['figure.figsize'] = (10.0, 8.0)
+# set default size of plots
 plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
@@ -22,12 +24,17 @@ plt.rcParams['image.cmap'] = 'gray'
 WORKING_DIR = "/mnt/Alice/ISI/SEM3/NNA/Assignments/assignment2/"
 
 
-def main():
+def train_fc_net():
+    path_to_save_model = WORKING_DIR + "fc.pkl"
+    path_to_save_solver = WORKING_DIR + "solver.pkl"
+
     data = get_CIFAR10_data(dir_path=WORKING_DIR)
-    learning_rate = 10**(np.random.uniform(-4, -1))
-    weight_scale = 10**(np.random.uniform(-6, -1))
+    # learning_rate = 10**(np.random.uniform(-4, -1))
+    # weight_scale = 10**(np.random.uniform(-6, -1))
+    learning_rate = 1e-3
+    weight_scale = 5e-2
     model = FullyConnectedNet(
-        [100, 200, 200, 100],
+        [100, 100, 100, 100, 100],
         weight_scale=weight_scale,
         dtype=np.float64,
         reg=0.1
@@ -38,7 +45,7 @@ def main():
                 print_every=100,
                 num_epochs=40,
                 batch_size=1000,
-                update_rule='sgd',
+                update_rule='adam',
                 optim_config={
                     'learning_rate': learning_rate,
                     }
@@ -59,6 +66,25 @@ def main():
     plt.ylabel('Accuracy')
     plt.savefig(WORKING_DIR+'accuracy.png')
 
+    SaveLoad.save_object(path_to_save_model, model)
+    SaveLoad.save_object(path_to_save_solver, solver)
+
+
+def test_model():
+    path_to_save_model = WORKING_DIR + "fc.pkl"
+    path_to_save_solver = WORKING_DIR + "solver.pkl"
+    _ = SaveLoad.load_object(path_to_save_model)
+    solver = SaveLoad.load_object(path_to_save_solver)
+
+    data = get_CIFAR10_data(dir_path=WORKING_DIR)
+
+    testing_accuracy = solver.check_accuracy(
+        data['X_test'],
+        data['y_test']
+    )
+    print("Testing Accuracy : {}".format(testing_accuracy))
+
 
 if __name__ == "__main__":
-    main()
+    train_fc_net()
+    test_model()
