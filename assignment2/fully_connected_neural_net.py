@@ -2,7 +2,7 @@ import time
 import numpy as np
 import os
 from neuralnet.fc_net import FullyConnectedNet
-from neuralnet.data_utils import get_CIFAR10_data
+from neuralnet.data_utils import get_CIFAR10_data, get_iris_data
 from neuralnet.gradient_check import eval_numerical_gradient
 from neuralnet.gradient_check import eval_numerical_gradient_array
 from neuralnet.solver import Solver
@@ -22,19 +22,25 @@ plt.rcParams['image.cmap'] = 'gray'
 
 # WORKING_DIR = "/user1/student/mtc/mtc2018/mtc1807/SEM3/NNA/assignment2/"
 WORKING_DIR = "/mnt/Alice/ISI/SEM3/NNA/Assignments/assignment2/"
+SOLVER_PICKLE = "solver_iris.pkl"
+LAYER_PICKLE = "fc_iris.pkl"
 
 
 def train_fc_net():
-    path_to_save_model = WORKING_DIR + "fc.pkl"
-    path_to_save_solver = WORKING_DIR + "solver.pkl"
+    path_to_save_model = WORKING_DIR + LAYER_PICKLE
+    path_to_save_solver = WORKING_DIR + SOLVER_PICKLE
 
-    data = get_CIFAR10_data(dir_path=WORKING_DIR)
+    # data = get_CIFAR10_data(dir_path=WORKING_DIR)
+    data = get_iris_data()
     # learning_rate = 10**(np.random.uniform(-4, -1))
     # weight_scale = 10**(np.random.uniform(-6, -1))
     learning_rate = 1e-3
     weight_scale = 5e-2
     model = FullyConnectedNet(
-        [100, 100, 100, 100, 100],
+        [100, 100, 100],                # for IRIS
+        input_dim=4,                    # for IRIS
+        num_classes=3,                  # for IRIS
+        # [100, 100, 100, 100, 100],    # for CIFAR10
         weight_scale=weight_scale,
         dtype=np.float64,
         reg=0.1
@@ -42,8 +48,8 @@ def train_fc_net():
     solver = Solver(
                 model,
                 data,
-                print_every=100,
-                num_epochs=40,
+                print_every=1,
+                num_epochs=20,
                 batch_size=1000,
                 update_rule='adam',
                 optim_config={
@@ -71,12 +77,13 @@ def train_fc_net():
 
 
 def test_model():
-    path_to_save_model = WORKING_DIR + "fc.pkl"
-    path_to_save_solver = WORKING_DIR + "solver.pkl"
+    path_to_save_model = WORKING_DIR + LAYER_PICKLE
+    path_to_save_solver = WORKING_DIR + SOLVER_PICKLE
     _ = SaveLoad.load_object(path_to_save_model)
     solver = SaveLoad.load_object(path_to_save_solver)
 
-    data = get_CIFAR10_data(dir_path=WORKING_DIR)
+    # data = get_CIFAR10_data(dir_path=WORKING_DIR)
+    data = get_iris_data()
 
     testing_accuracy = solver.check_accuracy(
         data['X_test'],
