@@ -1,0 +1,4 @@
+*.pkl
+.ipynp_checkpoints
+.vscode
+*.png

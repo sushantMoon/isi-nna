@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import random
 
-DIMENSION_OF_X = 2
+DIMENSION_OF_X = 3
 TOTAL_SAMPLES = 1000
 total_classes = 3
 EPOCHS = 100

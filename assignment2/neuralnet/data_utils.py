@@ -2,6 +2,7 @@ import _pickle as pickle
 import numpy as np
 import os
 from sklearn import datasets
+from sklearn.metrics import confusion_matrix
 
 WORKING_DIR = '/mnt/Alice/ISI/SEM3/NNA/Assignments/assignment2/'
 
@@ -145,3 +146,6 @@ def load_models(models_dir):
             except pickle.UnpicklingError:
                 continue
     return models
+
+def get_confusion_matrix(y_true, y_pred):
+    return confusion_matrix(y_true, y_pred)

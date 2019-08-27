@@ -219,7 +219,7 @@ class Solver(object):
         y_pred = np.hstack(y_pred)
         acc = np.mean(y_pred == y)
 
-        return acc
+        return acc, y_pred
 
     def train(self):
         """
@@ -254,9 +254,9 @@ class Solver(object):
             first_it = (t == 0)
             last_it = (t == num_iterations + 1)
             if first_it or last_it or epoch_end:
-                train_acc = self.check_accuracy(self.X_train, self.y_train,
+                train_acc, _ = self.check_accuracy(self.X_train, self.y_train,
                                                 num_samples=1000)
-                val_acc = self.check_accuracy(self.X_val, self.y_val)
+                val_acc, _ = self.check_accuracy(self.X_val, self.y_val)
                 self.train_acc_history.append(train_acc)
                 self.val_acc_history.append(val_acc)
 

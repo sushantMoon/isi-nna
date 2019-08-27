@@ -5,15 +5,15 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 
-DIMENSION_OF_X = 2
+DIMENSION_OF_X = 3
 TOTAL_SAMPLES = 1000
 ANIMATE = False
 
 itr = data_generator(
     total_classes=2,
     total_dimensions=DIMENSION_OF_X,
-    list_of_means=[1, 10],
-    list_of_std=[1, 1]
+    list_of_means=[1, 10, 20],
+    list_of_std=[1, 1, 1]
 )
 
 X = []

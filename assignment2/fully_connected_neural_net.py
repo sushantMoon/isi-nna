@@ -3,6 +3,7 @@ import numpy as np
 import os
 from neuralnet.fc_net import FullyConnectedNet
 from neuralnet.data_utils import get_CIFAR10_data, get_iris_data
+from neuralnet.data_utils import get_confusion_matrix
 from neuralnet.gradient_check import eval_numerical_gradient
 from neuralnet.gradient_check import eval_numerical_gradient_array
 from neuralnet.solver import Solver
@@ -34,21 +35,23 @@ def train_fc_net():
     data = get_iris_data()
     # learning_rate = 10**(np.random.uniform(-4, -1))
     # weight_scale = 10**(np.random.uniform(-6, -1))
-    learning_rate = 1e-3
-    weight_scale = 5e-2
+    # learning_rate = 1e-3
+    # weight_scale = 5e-2
+    learning_rate = 9e-2        # iris
+    weight_scale = 9e-3         # iris
     model = FullyConnectedNet(
-        [100, 100, 100],                # for IRIS
+        [100, 100],                # for IRIS
         input_dim=4,                    # for IRIS
         num_classes=3,                  # for IRIS
         # [100, 100, 100, 100, 100],    # for CIFAR10
         weight_scale=weight_scale,
         dtype=np.float64,
-        reg=0.1
+        reg=0.3
     )
     solver = Solver(
                 model,
                 data,
-                print_every=1,
+                print_every=10,
                 num_epochs=20,
                 batch_size=1000,
                 update_rule='adam',
@@ -85,10 +88,12 @@ def test_model():
     # data = get_CIFAR10_data(dir_path=WORKING_DIR)
     data = get_iris_data()
 
-    testing_accuracy = solver.check_accuracy(
+    testing_accuracy, y_pred = solver.check_accuracy(
         data['X_test'],
         data['y_test']
     )
+    print("Confusion Matrix")
+    print(get_confusion_matrix(data['y_test'], y_pred))
     print("Testing Accuracy : {}".format(testing_accuracy))
 
 
