@@ -1,6 +1,5 @@
 .vscode
-assignment1/__pycache__/*
-assignment2/.ipynb_checkpoints/*
-assignment2/neuralnet/__pycache__/*
-assignment1/__pycache__/*
-assignment2/.ipynb_checkpoints/*
+*/__pycache__/*
+*/.ipynb_checkpoints/*
+*/**/__pycache__/*
+*/**/.ipynb_checkpoints/*

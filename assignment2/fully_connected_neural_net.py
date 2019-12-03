@@ -25,6 +25,8 @@ plt.rcParams['image.cmap'] = 'gray'
 WORKING_DIR = "/mnt/Alice/ISI/SEM3/NNA/Assignments/assignment2/"
 SOLVER_PICKLE = "solver_iris.pkl"
 LAYER_PICKLE = "fc_iris.pkl"
+# SOLVER_PICKLE = "solver-cifar10.pkl"
+# LAYER_PICKLE = "fc-cifar10.pkl"
 
 
 def train_fc_net():
@@ -37,10 +39,22 @@ def train_fc_net():
     # weight_scale = 10**(np.random.uniform(-6, -1))
     # learning_rate = 1e-3
     # weight_scale = 5e-2
-    learning_rate = 9e-2        # iris
-    weight_scale = 9e-3         # iris
+    #
+    # learning_rate = 9e-2        # iris
+    # weight_scale = 9e-3         # iris
+    # model = FullyConnectedNet(
+    #     [100, 100],                # for IRIS
+    #     input_dim=4,                    # for IRIS
+    #     num_classes=3,                  # for IRIS
+    #     # [100, 100, 100, 100, 100],    # for CIFAR10
+    #     weight_scale=weight_scale,
+    #     dtype=np.float64,
+    #     reg=0.3
+    # )
+    learning_rate = 3e-1        # iris
+    weight_scale = 9e-2         # iris
     model = FullyConnectedNet(
-        [100, 100],                # for IRIS
+        [5],                # for IRIS
         input_dim=4,                    # for IRIS
         num_classes=3,                  # for IRIS
         # [100, 100, 100, 100, 100],    # for CIFAR10
